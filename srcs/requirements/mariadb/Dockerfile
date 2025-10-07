@@ -10,6 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-#Using Alpine as a base for it
+#Using Debian as a base for it
 #Dockerfile of MariaDB
-FROM alpine:3.22.0 
+FROM debian:oldstable
+
+RUN apt update && apt upgrade -y
+RUN apt install -y mariadb-server
+
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./tools/create_database.sh /tmp/create_database.sh
+
+RUN chmod +x /tmp/create_database.sh
+
+EXPOSE 3306
+
+CMD ["/tmp/create_database.sh"]
