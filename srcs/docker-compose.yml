@@ -2,11 +2,7 @@ services:
   mariadb:
     build:
       context: ./requirements/mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file: .env
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
@@ -18,19 +14,7 @@ services:
       context: ./requirements/wordpress
     depends_on:
       - mariadb
-    environment:
-      WP_DB_HOST: ${WP_DB_HOST}
-      WP_DB_NAME: ${WP_DB_NAME}
-      WP_DB_USER: ${WP_DB_USER}
-      WP_DB_PASSWORD: ${WP_DB_PASSWORD}
-      WP_TABLE_PREFIX: ${WP_TABLE_PREFIX}
-      WP_ADMIN: ${WP_ADMIN}
-      WP_ADMIN_PWD: ${WP_ADMIN_PWD}
-      WP_ADMIN_MAIL: ${WP_ADMIN_MAIL}
-      WP_USER: ${WP_USER}
-      WP_USER_PWD: ${WP_USER_PWD}
-      WP_USER_MAIL: ${WP_USER_MAIL}
-      WP_TITLE: ${WP_TITLE}
+    env_file: .env
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -44,8 +28,7 @@ services:
       - wordpress
     ports:
       - "${NGINX_PORT}:443"
-    environment:
-      DOMAIN_NAME: ${DOMAIN_NAME}
+    env_file: .env
     volumes:
       - wordpress_data:/var/www/html
     networks:

@@ -22,6 +22,12 @@ define( 'DB_CHARSET',  'utf8mb4' );
 /* MySQL database table prefix. */
 $table_prefix = 'wp_';
 
+$env_wp_url = getenv('WP_URL');
+if ($env_wp_url) {
+	define('WP_HOME', $env_wp_url);
+	define('WP_SITEURL', $env_wp_url);
+}
+
 
 /* Authentication Unique Keys and Salts. */
 /* https://api.wordpress.org/secret-key/1.1/salt/ */
