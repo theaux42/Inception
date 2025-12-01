@@ -28,8 +28,9 @@ GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
 
 # 2. SÉCURISATION ROOT LOCALE (NOUVEAU)
 # Force root@localhost à utiliser le mot de passe défini par MARIADB_ROOT_PASSWORD
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'
-    REPLACE 'unix_socket' WITH 'mysql_native_password';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+UPDATE mysql.user SET plugin = 'mysql_native_password'
+    WHERE User = 'root' AND Host = 'localhost';
 
 FLUSH PRIVILEGES;
 EOF
