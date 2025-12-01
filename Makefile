@@ -1,8 +1,8 @@
 all : up
 
 up :
-	@mkdir -p ./data/mariadb
-	@mkdir -p ./data/wordpress
+	@mkdir -p ~/data/mariadb
+	@mkdir -p ~/data/wordpress
 	@docker compose -f ./srcs/docker-compose.yml up -d
 
 stop :
@@ -19,7 +19,7 @@ clean :
 
 fclean : clean
 	@docker system prune -af --volumes
-	@sudo rm -rf ~/Inception/data
+	@sudo rm -rf ~/data
 
 re : fclean all
 
